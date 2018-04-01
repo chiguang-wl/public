@@ -22,3 +22,7 @@ or by opening a GitHub issue.
 Please see the [OpenConfig web site](http://www.openconfig.net) for information
 for operators wishing to join OpenConfig, in particular the
 [FAQ for operators](http://www.openconfig.net/documents/faq-for-operators).
+
+-----------------------------------------------------------------------------
+this is my own copy of original openconfig project, and any modification or extension is informal
+-----------------------------------------------------------------------------
