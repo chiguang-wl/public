@@ -62,7 +62,15 @@ module openconfig-platform {
     (presence or absence of a component) and state (physical
     attributes or status).";
 
-  oc-ext:openconfig-version "0.9.0";
+  oc-ext:openconfig-version "0.10.0";
+
+  revision "2018-03-20" {
+    description
+      "Added new per-component config data: admin-status;
+      Added new per-component state data: mfg-time;
+      Added supercomponent for super-component reference.";
+    reference "0.10.0";
+  }
 
   revision "2018-01-30" {
     description
@@ -244,6 +252,53 @@ module openconfig-platform {
     }
   }
 
+   grouping platform-supercomponent-ref-config {
+    description
+      "Configuration data for supercomponent references";
+
+    leaf name {
+      type leafref {
+        path "../../../../component/config/name";
+      }
+      description
+        "Reference to the name of the supercomponent";
+    }
+  }
+
+  grouping platform-supercomponent-ref-state {
+    description
+      "Operational state data for supercomponent references";
+
+  }
+
+  grouping platform-supercomponent-ref-top {
+    description
+      "Top-level grouping for list of supercomponent references";
+
+    container supercomponent {
+      description
+        "Container for supercomponent references";
+
+      container config {
+        description
+          "Configuration data for the supercomponent";
+
+        uses platform-supercomponent-ref-config;
+      }
+
+      container state {
+
+        config false;
+
+        description
+          "Operational state data for the supercomponent";
+
+        uses platform-supercomponent-ref-config;
+        uses platform-supercomponent-ref-state;
+      }
+    }
+  }
+
   grouping platform-component-config {
     description
       "Configuration data for components";
@@ -253,6 +308,28 @@ module openconfig-platform {
       description
         "Device name for the component -- this will not be a
         configurable parameter on many implementations";
+    }
+
+     leaf admin-status {
+      type enumeration {
+        enum "up" {
+          description
+            "The resource is administratively permitted to perform 
+            services for its users. This is independent of its inherent 
+            operability, i.e. whether it is capable of providing service. ";
+        }
+
+        enum "down" {
+          description
+            "The resource is administratively prohibited from performing 
+            services for its users. The resource currently does not provide any service.";
+        }
+      }
+      default "up";
+      description
+        "The administrative state specifies the permission to use or prohibition 
+        against using the resource. The administrative state can be modified by the user, 
+        and operates independently of the operability and usage of the resource.";
     }
   }
 
@@ -293,6 +370,12 @@ module openconfig-platform {
         component.  This data is particularly useful when a
         component manufacturer is different than the overall
         device vendor.";
+    }
+
+    leaf mfg-time {
+      type string;
+      description
+        "manufacturing time of the component.";
     }
 
     leaf hardware-version {
@@ -676,6 +759,7 @@ module openconfig-platform {
         }
 
         uses platform-component-properties-top;
+        uses platform-supercomponent-ref-top;
         uses platform-subcomponent-ref-top;
         uses platform-anchors-top;
       }
