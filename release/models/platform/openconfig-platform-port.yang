@@ -24,7 +24,14 @@ module openconfig-platform-port {
   description
     "This module defines data related to PORT components in the openconfig-platform model";
 
-  oc-ext:openconfig-version "0.3.0";
+  oc-ext:openconfig-version "0.4.0";
+
+  revision "2018-03-20" {
+    description
+      "Added port-type and port-to-interface reference 
+      to port state data";
+    reference "0.4.0";
+  }
 
   revision "2018-01-20" {
     description
@@ -109,6 +116,47 @@ module openconfig-platform-port {
     }
   }
 
+  grouping port-config
+  {
+    
+  }
+
+  grouping port-state {
+
+    leaf port-type {
+      description
+      "The type of port.";
+
+      type enumeration {
+        enum client {
+          description
+          "client side port.";
+        }
+
+        enum line {
+          description
+          "line side port.";
+        }
+
+        enum management {
+          description
+          "management port";
+        }
+
+        enum osc {
+          description
+          "osc port";
+        }
+      }
+    }
+
+    leaf iterface-ref {
+      type oc-if:base-interface-ref;      
+      description
+        "Reference to the interface related to this port.";
+    }
+  } 
+
   // data definition statements
 
   // augment statements
@@ -140,6 +188,14 @@ module openconfig-platform-port {
         "For non-channelized interfaces, references the hardware port
         corresponding to the base interface.";
     }
+  }
+
+  augment "/oc-platform:components/oc-platform:component/" +
+    "oc-platform:port/oc-platform:state" {
+    description
+      "Adding port state data to physical platform data";
+
+    uses port-state;
   }
 
   // rpc statements
