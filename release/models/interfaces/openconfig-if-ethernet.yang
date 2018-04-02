@@ -24,7 +24,16 @@ module openconfig-if-ethernet {
     "Model for managing Ethernet interfaces -- augments the OpenConfig
     model for interface configuration and state.";
 
-  oc-ext:openconfig-version "2.3.0";
+  oc-ext:openconfig-version "2.4.0";
+
+  revision "2018-03-20" {
+    description
+      "Added ethernet fec and als configuration/state data;
+      Modefied the description of ethernet counters 
+      according to IETF RFC2819;
+      Added new ethernet counters according to IETF RFC2819.";
+    reference "2.4.0";
+  }
 
   revision "2018-01-05" {
     description
@@ -185,6 +194,64 @@ module openconfig-if-ethernet {
       reference
         "IEEE 802.3x";
     }
+
+    leaf fec-type { 
+      type enumeration {
+        enum enabled {
+          value 1;
+          description
+            "FEC is enabled";
+        }
+
+        enum disabled {
+          value 2;
+          description
+            "FEC is disabled";
+        }
+
+        enum auto {
+          value 3;
+          description
+            "System will automatically decide FEC type of the ethernet interface.";
+        }
+      }
+
+      default auto;
+
+      description "FEC configuration";
+    }
+
+    leaf als-type
+    {
+      type enumeration {
+        enum none {
+          value 0;
+        }
+        enum laser-off {
+          value 1;
+          description
+            "Disable the transmitter consequent action.";
+        }
+        enum ethernet {
+          value 2;
+          description
+            "Ethernet Local Fault consequent action.";
+        }
+      }
+      default ethernet;
+      description
+        "Egress UNI port consequent action for network failure.";
+    }
+
+    leaf hold-off
+    {
+      type uint32;
+      units milliseconds;
+      default 0;
+      description
+        "Number of milliseconds to delay Egress UNI port consequent
+         action.";
+    }
   }
 
   grouping ethernet-interface-state-counters {
@@ -205,26 +272,52 @@ module openconfig-if-ethernet {
         "MAC layer PAUSE frames received on the interface";
     }
 
-    leaf in-oversize-frames {
+    leaf in-oversize-pkts {
       type oc-yang:counter64;
       description
-        "Number of oversize frames received on the interface";
+        "The total number of packets received that were
+        longer than 1518 octets (excluding framing bits,
+        but including FCS octets) and were otherwise
+        well formed.";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsOversizePkts";
     }
 
-    leaf in-jabber-frames {
+    leaf in-undersize-pkts {
       type oc-yang:counter64;
       description
-        "Number of jabber frames received on the
-        interface.  Jabber frames are typically defined as oversize
-        frames which also have a bad CRC.  Implementations may use
-        slightly different definitions of what constitutes a jabber
-        frame.  Often indicative of a NIC hardware problem.";
+        "The total number of packets received that were
+        less than 64 octets long (excluding framing bits,
+        but including FCS octets) and were otherwise well
+        formed.";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsundersizePkts";
     }
 
-    leaf in-fragment-frames {
+    leaf in-jabber-pkts {
       type oc-yang:counter64;
       description
-        "Number of fragment frames received on the interface.";
+        "The total number of packets received that were
+        longer than 1518 octets (excluding framing bits,
+        but including FCS octets), and had either a bad
+        Frame Check Sequence (FCS) with an integral number
+        of octets (FCS Error) or a bad FCS with a non-integral
+        number of octets (Alignment Error).";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsJabbers";
+    }
+
+    leaf in-fragment-pkts {
+      type oc-yang:counter64;
+       description
+        "The total number of packets received that were less than
+        64 octets in length (excluding framing bits but including
+        FCS octets) and had either a bad Frame Check Sequence
+        (FCS) with an integral number of octets (FCS Error) or a
+        bad FCS with a non-integral number of octets (Alignment
+        Error).";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsFragments";
     }
 
     leaf in-8021q-frames {
@@ -233,11 +326,89 @@ module openconfig-if-ethernet {
         "Number of 802.1q tagged frames received on the interface";
     }
 
+    leaf in-crc-align-errors {
+      type oc-yang:counter64;
+      description
+        "The total number of packets received that
+        had a length (excluding framing bits, but
+        including FCS octets) of between 64 and 1518
+        octets, inclusive, but had either a bad
+        Frame Check Sequence (FCS) with an integral
+        number of octets (FCS Error) or a bad FCS with
+        a non-integral number of octets (Alignment Error).";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsCRCAlignErrors";
+    }
+
     leaf in-crc-errors {
       type oc-yang:counter64;
       description
         "Number of receive error events due to FCS/CRC check
         failure";
+    }
+
+    leaf in-pkts {
+      type oc-yang:counter64;
+      description
+        "Number of packets received, including all unicast, 
+        multicast, broadcast, MAC control, and bad packets.";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsPkts";
+    }
+
+    leaf in-pkts-64-octet {
+      type oc-yang:counter64;
+      description
+        "Number of packets (including bad packets) received that 
+        were 64 bytes in length (excluding framing bits but including 
+        FCS bytes).";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsPkts64Octets";
+    }
+    leaf in-pkts-65-127-octet {
+      type oc-yang:counter64;
+      description
+        "Number of good and bad packets received that were 
+        between 65 and 127 bytes in length (excluding framing bits 
+        but including FCS bytes).";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsPkts65to127Octets";
+    }
+    leaf in-pkts-128-255-octet {
+      type oc-yang:counter64;
+      description
+        "Number of good and bad packets received that were 
+        between 128 and 255 bytes in length inclusive 
+        (excluding framing bits but including FCS bytes).";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsPkts128to255Octets";
+    }
+    leaf in-pkts-256-511-octet {
+      type oc-yang:counter64;
+      description
+        "Number of good and bad packets received that were 
+        between 256 and 511 bytes in length inclusive 
+        (excluding framing bits but including FCS bytes).";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsPkts256to511Octets";
+    }
+    leaf in-pkts-512-1023-octet {
+      type oc-yang:counter64;
+      description
+        "Number of good and bad packets received that were 
+        between 512 and 1023 bytes in length inclusive 
+        (excluding framing bits but including FCS bytes).";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsPkts512to1023Octets";
+    }
+    leaf in-pkts-1024-1518-octet {
+      type oc-yang:counter64;
+      description
+        "Number of good and bad packets received that were 
+        between 1024 and 1518 bytes in length inclusive 
+        (excluding framing bits but including FCS bytes).";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsPkts1024to1518Octets";
     }
 
     // egress counters
@@ -258,6 +429,15 @@ module openconfig-if-ethernet {
       type oc-yang:counter64;
       description
         "Number of 802.1q tagged frames sent on the interface";
+    }
+
+    leaf out-pkts {
+      type oc-yang:counter64;
+      description
+        "Number of transmitted packets, including all unicast, 
+        multicast, broadcast, MAC control, and bad packets.";
+      reference
+        "RFC 2819: Remote Network Monitoring MIB - etherStatsPkts";
     }
   }
 
