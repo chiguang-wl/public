@@ -7,6 +7,7 @@ module openconfig-types {
 
   // import statements
   import openconfig-extensions { prefix oc-ext; }
+  import openconfig-yang-types { prefix oc-yang; }
 
   // meta
   organization
@@ -21,8 +22,15 @@ module openconfig-types {
     are used across OpenConfig models. It can be imported by modules
     that make use of these types.";
 
-  oc-ext:openconfig-version "0.4.0";
+  oc-ext:openconfig-version "0.5.0";
 
+
+  revision "2018-03-20" {
+    description
+      "Add min_event_time and max_event_time to 
+      min/max/avg stats.";
+    reference "0.5.0";
+  }
   revision "2018-01-16" {
     description
       "Add interval to min/max/avg stats; add percentage stat";
@@ -172,6 +180,20 @@ module openconfig-types {
         period";
     }
 
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
     uses stat-interval-state;
   }
 
@@ -236,6 +258,20 @@ module openconfig-types {
         period";
     }
 
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
     uses stat-interval-state;
   }
 
@@ -281,6 +317,20 @@ module openconfig-types {
       units dBm;
       description
         "The maximum value of the statistic over the sampling
+        period";
+    }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
         period";
     }
 
@@ -332,6 +382,20 @@ module openconfig-types {
         period";
     }
 
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
     uses stat-interval-state;
   }
 
@@ -364,6 +428,20 @@ module openconfig-types {
       description
         "The maximum value of the percentage measure of the
         statistic over the sampling period";
+    }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
     }
 
     uses stat-interval-state;
