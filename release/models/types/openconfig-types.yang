@@ -28,7 +28,9 @@ module openconfig-types {
   revision "2018-03-20" {
     description
       "Add min_event_time and max_event_time to 
-      min/max/avg stats.";
+      min/max/avg stats;
+      Add avg-min-max-instant-stats-precision2-mV;
+      Add avg-min-max-instant-stats-precision2-watts.";
     reference "0.5.0";
   }
   revision "2018-01-16" {
@@ -377,6 +379,130 @@ module openconfig-types {
         fraction-digits 2;
       }
       units mA;
+      description
+        "The maximum value of the statistic over the sampling
+        period";
+    }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
+    uses stat-interval-state;
+  }
+
+  grouping avg-min-max-instant-stats-precision2-mV {
+    description
+      "Common grouping for recording mV values with 2 decimal
+      precision. Values include the instantaneous, average,
+      minimum, and maximum statistics";
+
+    leaf instant {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units mV;
+      description
+        "The instantaneous value of the statistic.";
+    }
+
+    leaf avg {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units mV;
+      description
+        "The arithmetic mean value of the statistic over the
+        sampling period.";
+    }
+
+    leaf min {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units mV;
+      description
+        "The minimum value of the statistic over the sampling
+        period";
+    }
+
+    leaf max {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units mV;
+      description
+        "The maximum value of the statistic over the sampling
+        period";
+    }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
+    uses stat-interval-state;
+  }
+
+  grouping avg-min-max-instant-stats-precision2-watts {
+    description
+      "Common grouping for recording watts values with 2 decimal
+      precision. Values include the instantaneous, average,
+      minimum, and maximum statistics";
+
+    leaf instant {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units watts;
+      description
+        "The instantaneous value of the statistic.";
+    }
+
+    leaf avg {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units watts;
+      description
+        "The arithmetic mean value of the statistic over the
+        sampling period.";
+    }
+
+    leaf min {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units watts;
+      description
+        "The minimum value of the statistic over the sampling
+        period";
+    }
+
+    leaf max {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units watts;
       description
         "The maximum value of the statistic over the sampling
         period";
