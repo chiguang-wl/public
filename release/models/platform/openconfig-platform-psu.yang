@@ -24,8 +24,15 @@ module openconfig-platform-psu {
     "This module defines a schema for power supply components in
     the OpenConfig platform model.";
 
-  oc-ext:openconfig-version "0.2.0";
+  oc-ext:openconfig-version "0.3.0";
 
+   revision "2018-03-20" {
+    description
+      "Changed iput-current, input-voltage, output-power, 
+      output-current, output-voltage to gauge parameter;
+      Added slot-id.";
+    reference "0.3.0";
+  }
   revision "2018-01-16" {
     description
       "Changed admin state leaf name";
@@ -61,6 +68,12 @@ module openconfig-platform-psu {
     description
       "Operational state data for power supply components";
 
+    leaf slot-id {
+      type string;
+      description
+        "Identifier for the slot or chassis position in which the
+        PSU is installed";
+    }
 
     // TODO(aashaikh): May need to convert some of these to
     // interval statistics once decided on which leaves to include.
@@ -71,37 +84,32 @@ module openconfig-platform-psu {
         "Maximum power capacity of the power supply.";
     }
 
-    leaf input-current {
-      type oc-types:ieeefloat32;
-      units amps;
+    container iput-current {
+      uses oc-types:avg-min-max-instant-stats-precision2-mA;
       description
         "The input current draw of the power supply.";
     }
 
-    leaf input-voltage {
-      type oc-types:ieeefloat32;
-      units volts;
+    container iput-voltage {
+      uses oc-types:avg-min-max-instant-stats-precision2-mV;
       description
         "Input voltage to the power supply.";
     }
 
-    leaf output-current {
-      type oc-types:ieeefloat32;
-      units amps;
+    container output-current {
+      uses oc-types:avg-min-max-instant-stats-precision2-mA;
       description
         "The output current supplied by the power supply.";
     }
 
-    leaf output-voltage {
-      type oc-types:ieeefloat32;
-      units volts;
+    container output-voltage {
+      uses oc-types:avg-min-max-instant-stats-precision2-mV;
       description
         "Output voltage supplied by the power supply.";
     }
 
-    leaf output-power {
-      type oc-types:ieeefloat32;
-      units watts;
+    container output-power {
+      uses oc-types:avg-min-max-instant-stats-precision2-watts;
       description
         "Output power supplied by the power supply.";
     }
