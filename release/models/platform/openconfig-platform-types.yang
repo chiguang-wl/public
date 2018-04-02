@@ -9,6 +9,7 @@ module openconfig-platform-types {
 
   import openconfig-types { prefix oc-types; }
   import openconfig-extensions { prefix oc-ext; }
+  import openconfig-yang-types { prefix oc-yang; }
 
 
   // meta
@@ -22,8 +23,15 @@ module openconfig-platform-types {
     "This module defines data types (e.g., YANG identities)
     to support the OpenConfig component inventory model.";
 
-  oc-ext:openconfig-version "0.8.0";
+  oc-ext:openconfig-version "0.9.0";
 
+  revision "2018-03-20" {
+    description
+      "Added min_event_time and max_event_time to 
+      avg-min-max-instant-stats;
+      Added avg-min-max-instant-stats-rpm.";
+    reference "0.9.0";
+  }
   revision "2018-01-16" {
     description
       "Added new per-component common data; add temp alarm";
@@ -93,6 +101,79 @@ module openconfig-platform-types {
       units celsius;
       description
         "The maximum value of the statistic over the sampling
+        period";
+    }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
+    leaf interval {
+      type oc-types:stat-interval;
+      description
+        "The time interval over which the min/max/average statistics
+        are computed by the system.";
+    }
+  }
+
+  grouping avg-min-max-instant-stats-rpm {
+    description
+      "Common grouping for recording fan speed values in
+      rpm with uint32. Values include the
+      instantaneous, average, minimum, and maximum statistics";
+
+    leaf instant {
+      type uint32;
+      units rpm;
+      description
+        "The instantaneous value of the statistic.";
+    }
+
+    leaf avg {
+      type uint32;
+      units rpm;
+      description
+        "The arithmetic mean value of the statistic over the
+        sampling period.";
+    }
+
+    leaf min {
+      type uint32;
+      units rpm;
+      description
+        "The minimum value of the statistic over the sampling
+        period";
+    }
+
+    leaf max {
+      type uint32;
+      units rpm;
+      description
+        "The maximum value of the statistic over the sampling
+        period";
+    }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
         period";
     }
 
