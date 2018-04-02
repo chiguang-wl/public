@@ -9,6 +9,7 @@ module openconfig-platform-fan {
 
   import openconfig-platform { prefix oc-platform; }
   import openconfig-extensions { prefix oc-ext; }
+  import openconfig-platform-types {prefix oc-platform-types; }
 
 
   // meta
@@ -22,8 +23,16 @@ module openconfig-platform-fan {
     "This module defines data related to FAN components in the
     OpenConfig platform model.";
 
-  oc-ext:openconfig-version "0.1.0";
+  oc-ext:openconfig-version "0.2.0";
 
+  
+  revision "2018-03-20" {
+    description
+      "Added slot-id to FAN state data; 
+      change speed to a gauge parameter 
+      with instant/min/max/avg stats.";
+    reference "0.2.0";
+  }
   revision "2018-01-18" {
     description
       "Initial revision";
@@ -40,11 +49,17 @@ module openconfig-platform-fan {
     description
       "Operational state data for fan components";
 
-    leaf speed {
-      type uint32;
-      units rpm;
+    leaf slot-id {
+      type string;
       description
-        "Current (instantaneous) fan speed";
+        "Identifier for the slot or chassis position in which the
+        FAN is installed";
+    }
+
+    container speed {
+      uses oc-platform-types:avg-min-max-instant-stats-rpm;
+      description
+        "fan speed rate. unit: rate per second";
     }
   }
 
