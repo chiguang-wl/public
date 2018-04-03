@@ -150,10 +150,16 @@ module openconfig-platform-port {
       }
     }
 
-    leaf iterface-ref {
+    leaf ethernet-interface {
       type oc-if:base-interface-ref;      
       description
-        "Reference to the interface related to this port.";
+        "Reference to the ethernet interface related to this port.";
+    }
+
+    leaf otn-interface {
+      type oc-if:base-interface-ref;      
+      description
+        "Reference to the OTN interface related to this port.";
     }
   } 
 
