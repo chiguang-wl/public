@@ -10,10 +10,12 @@ module openconfig-terminal-device {
   import openconfig-types { prefix oc-types; }
   import openconfig-transport-types { prefix oc-opt-types; }
   import openconfig-if-ethernet { prefix oc-eth; }
+  import openconfig-interfaces { prefix oc-if; }
   import openconfig-platform { prefix oc-platform; }
   import openconfig-platform-transceiver { prefix oc-transceiver; }
   import openconfig-extensions { prefix oc-ext; }
   import ietf-yang-types { prefix yang; }
+  import iana-if-type { prefix ift; }
 
 
   // meta
@@ -74,7 +76,17 @@ module openconfig-terminal-device {
     ports per linecard, separate linecards for client and line ports,
     etc.).";
 
-  oc-ext:openconfig-version "1.0.0";
+  oc-ext:openconfig-version "1.1.0";
+
+  revision "2018-03-20" {
+    description
+      "Adds OTN configuration and state data 
+      and augment it to OTN interface;
+      Delete OTN and ethernet data in logical channel;
+      Change ingress transceiver to ingress port.";
+    reference "1.1.0";
+  }
+
 
   revision "2017-07-08" {
     description
@@ -204,6 +216,12 @@ module openconfig-terminal-device {
         "The number of seconds during which the link is unavailable";
     }
 
+    leaf errored-blocks {
+      type yang:counter64;
+      description
+        "The number of errored blocks";
+    }
+
     leaf code-violations {
       type yang:counter64;
       description
@@ -216,6 +234,12 @@ module openconfig-terminal-device {
       type yang:counter64;
       description
         "The number words that were uncorrectable by the FEC";
+    }
+
+    leaf fec-uncorrectable-blocks {
+      type yang:counter64;
+      description
+        "The number blocks that were uncorrectable by the FEC";
     }
 
     leaf fec-corrected-bytes {
@@ -314,6 +338,13 @@ module openconfig-terminal-device {
         description
           "Remote defect indication (RDI) message received";
       }
+
+      leaf otu-type {
+        type identityref {
+          base oc-opt-types:TRIBUTARY_PROTOCOL_TYPE;
+        }
+      }
+
       uses terminal-otn-protocol-counter-stats;
       uses terminal-otn-protocol-multi-stats;
   }
@@ -346,6 +377,137 @@ module openconfig-terminal-device {
         uses terminal-otn-protocol-config;
         uses terminal-otn-protocol-state;
       }
+    }
+  }
+
+  grouping terminal-odu-protocol-counter-stats {
+    description
+      "Counter based statistics containers for ODU framing";
+
+    leaf errored-seconds {
+      type yang:counter64;
+      description
+        "The number of seconds that at least one errored blocks
+        occurs, at least one code violation occurs, loss of sync is
+        detected or loss of signal is detected";
+    }
+
+    leaf severely-errored-seconds {
+      type yang:counter64;
+      description
+        "The number of seconds that loss of frame is detected OR
+        the number of errored blocks, code violations, loss of sync
+        or loss of signal is detected exceeds a predefined
+        threshold";
+    }
+
+    leaf unavailable-seconds {
+      type yang:counter64;
+      description
+        "The number of seconds during which the link is unavailable";
+    }
+
+    leaf errored-blocks {
+      type yang:counter64;
+      description
+        "The number of errored blocks";
+    }
+
+    leaf background-block-errors {
+      type yang:counter64;
+      description
+        "The number of background block errors";
+    }
+  }
+
+  grouping terminal-odu-protocol-state {
+    description
+      "OTU operational state when logical channel
+      framing is using an OTU protocol, e.g., OTU1, OTU3, etc.";
+
+
+      leaf tti-msg-recv {
+        type string;
+        description
+          "Trail trace identifier (TTI) message received";
+      }
+
+      leaf rdi-msg {
+        type string;
+        description
+          "Remote defect indication (RDI) message received";
+      }
+
+      leaf odu-type {
+        type identityref {
+          base oc-opt-types:TRIBUTARY_PROTOCOL_TYPE;
+        }
+      }
+
+      uses terminal-odu-protocol-counter-stats;     
+  }
+
+  grouping terminal-odu-protocol-top {
+    description
+      "Top-level grouping for data related to ODU protocol framing";
+
+    container odu {
+      description
+        "Top level container for ODU configuration when logical
+        channel framing is using an ODU protocol, e.g., ODU2, ODU4,
+        etc.";
+
+      container config {
+        description
+          "Configuration data for ODU protocol framing";
+
+        uses terminal-otn-protocol-config;
+      }
+
+      container state {
+
+        config false;
+
+        description
+          "Operational state data for ODU protocol PMs, statistics,
+          etc.";
+
+        uses terminal-otn-protocol-config;
+        uses terminal-odu-protocol-state;
+      }
+    }
+  }
+
+  grouping otu-odu-protocol-top
+  {
+    container otn {
+      container otu {
+        description
+          "Top level container for OTU configuration when logical
+          channel framing is using an OTU protocol, e.g., OTU1, OTU3,
+          etc.";
+
+        container config {
+          description
+            "Configuration data for OTU protocol framing";
+
+          uses terminal-otn-protocol-config;
+        }
+
+        container state {
+
+          config false;
+
+          description
+            "Operational state data for OTU protocol PMs, statistics,
+            etc.";
+
+          uses terminal-otn-protocol-config;
+          uses terminal-otn-protocol-state;
+        }
+      }
+
+      uses terminal-odu-protocol-top;
     }
   }
 
@@ -600,13 +762,13 @@ module openconfig-terminal-device {
     description
       "Configuration data for ingress signal to logical channel";
 
-    leaf transceiver {
+    leaf port {
       type leafref {
         path "/oc-platform:components/oc-platform:component/" +
         "oc-platform:name";
       }
       description
-        "Reference to the transceiver carrying the input signal
+        "Reference to the port carrying the input signal
         for the logical channel.  If specific physical channels
         are mapped to the logical channel (as opposed to all
         physical channels carried by the transceiver), they can be
@@ -824,20 +986,6 @@ module openconfig-terminal-device {
           uses terminal-logical-channel-state;
         }
 
-        uses terminal-otn-protocol-top {
-          when "config/logical-channel-type = 'PROT_OTN'" {
-            description
-              "Include the OTN protocol data only when the
-              channel is using OTN framing.";
-          }
-        }
-        uses terminal-ethernet-protocol-top {
-          when "config/logical-channel-type = 'PROT_ETHERNET'" {
-            description
-              "Include the Ethernet protocol statistics only when the
-              protocol used by the link is Ethernet.";
-          }
-        }
         uses terminal-logical-channel-ingress-top;
         uses terminal-logical-chan-assignment-top;
       }
@@ -1135,6 +1283,19 @@ module openconfig-terminal-device {
       "Adding optical channel data to physical inventory";
 
     uses terminal-optical-channel-top {
+    }
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface" {
+    description "Adds addtional OTN-specific configuration to
+    interfaces model";
+
+    uses otu-odu-protocol-top {
+      when "oc-if:state/oc-if:type = 'ift:otnOdu' or " + 
+      "oc-if:state/oc-if:type = 'ift:otnOtu'" {
+      description "Additional interface configuration parameters when
+      the interface type is otnOdu/otnOtu";
+      }
     }
   }
 
