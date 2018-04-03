@@ -35,13 +35,13 @@ module openconfig-platform-transceiver {
     module defines a concrete schema for the associated data for
     components with type=TRANSCEIVER.";
 
-  oc-ext:openconfig-version "0.4.1";
+  oc-ext:openconfig-version "0.5.0";
 
-  revision "2018-01-22" {
+  revision "2018-03-20" {
     description
       "Delete enabled, vendor-part and serial-no, 
       which present in component common data";
-    reference "0.4.1";
+    reference "0.5.0";
   }
 
   revision "2018-01-22" {
