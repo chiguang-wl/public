@@ -39,6 +39,13 @@ module openconfig-platform-transceiver {
 
   revision "2018-01-22" {
     description
+      "Delete enabled, vendor-part and serial-no, 
+      which present in component common data";
+    reference "0.4.1";
+  }
+
+  revision "2018-01-22" {
+    description
       "Fixed physical-channel path reference";
     reference "0.4.1";
   }
@@ -232,17 +239,6 @@ module openconfig-platform-transceiver {
     description
       "Configuration data for client port transceivers";
 
-    leaf enabled {
-      type boolean;
-      description
-        "Turns power on / off to the transceiver -- provides a means
-        to power on/off the transceiver (in the case of SFP, SFP+,
-        QSFP,...) or enable high-power mode (in the case of CFP,
-        CFP2, CFP4) and is optionally supported (device can choose to
-        always enable).  True = power on / high power, False =
-        powered off";
-    }
-
     leaf form-factor-preconf {
       type identityref {
         base oc-opt-types:TRANSCEIVER_FORM_FACTOR_TYPE;
@@ -343,17 +339,6 @@ module openconfig-platform-transceiver {
         right with ASCII spaces (20h)";
     }
 
-    leaf vendor-part {
-      type string {
-        length 1..16;
-      }
-      description
-        "Transceiver vendor's part number. 16-octet field that
-        contains ASCII characters, left-aligned and padded on the
-        right with ASCII spaces (20h). If part number is undefined,
-        all 16 octets = 0h";
-    }
-
     leaf vendor-rev {
       type string {
         length 1..2;
@@ -390,17 +375,6 @@ module openconfig-platform-transceiver {
       }
       description
         "OTN application code supported by the port";
-    }
-
-    leaf serial-no {
-      type string {
-        length 1..16;
-      }
-      description
-        "Transceiver serial number. 16-octet field that contains
-        ASCII characters, left-aligned and padded on the right with
-        ASCII spaces (20h). If part serial number is undefined, all
-        16 octets = 0h";
     }
 
     leaf date-code {
