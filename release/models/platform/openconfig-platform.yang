@@ -331,6 +331,12 @@ module openconfig-platform {
         against using the resource. The administrative state can be modified by the user, 
         and operates independently of the operability and usage of the resource.";
     }
+
+    leaf description {
+      type string;
+      description
+        "Description of the component, system or user defined";
+    }
   }
 
   grouping platform-component-state {
@@ -355,12 +361,6 @@ module openconfig-platform {
       description
         "Unique identifier assigned by the system for the
         component";
-    }
-
-    leaf description {
-      type string;
-      description
-        "System-supplied description of the component";
     }
 
     leaf mfg-name {
