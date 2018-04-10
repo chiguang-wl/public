@@ -24,7 +24,14 @@ module openconfig-lldp {
     "This module defines configuration and operational state data
     for the LLDP protocol.";
 
-  oc-ext:openconfig-version "0.1.0";
+  oc-ext:openconfig-version "0.2.0";
+
+  revision "2018-04-10" {
+    description
+      "Added lldp-mode to lldp/interfaces/interface configuration 
+      and state data";
+    reference "0.2.0";
+  }
 
   revision "2016-05-16" {
     description
@@ -491,6 +498,39 @@ module openconfig-lldp {
       default "true";
       description
         "Enable or disable the LLDP protocol on the interface.";
+    }
+
+    leaf lldp-mode {
+      type enumeration {
+        enum not-applicable {
+          value 0;
+        }
+
+        enum txAndRx {
+          value 1;
+        }
+
+        enum rxonly {
+          value 2;
+        }
+
+        enum disabled {
+          value 3;
+        }
+      }
+
+      default txAndRx;
+      description
+        "lldp mode control. 
+        Value of 'rxonly', then the LLDP agent will only 
+        receive lldp, when enabled is also true.                    
+        Value of 'disabled', then LLDP agent will not filter 
+        and receive LLDP frames on this port.  If there is 
+        remote systems information which is received on this 
+        port and stored in the system before the enabled becomes 
+        false, then the information will naturally age out.    
+        Value of 'txAndRx', then the LLDP agent will both 
+        send and receive lldp, when enabled is also true.";
     }
   }
 
