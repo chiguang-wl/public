@@ -8,7 +8,9 @@ module openconfig-transport-types {
   prefix "oc-opt-types";
 
   import openconfig-platform-types { prefix oc-platform-types; }
+  import openconfig-types { prefix oc-types; }
   import openconfig-extensions { prefix oc-ext; }
+  import openconfig-yang-types { prefix oc-yang; }
 
   // meta
   organization "OpenConfig working group";
@@ -21,7 +23,14 @@ module openconfig-transport-types {
     "This module contains general type definitions and identities
     for optical transport models.";
 
-  oc-ext:openconfig-version "0.5.0";
+  oc-ext:openconfig-version "0.6.0";
+
+  revision "2018-04-10" {
+    description
+      "Added min_event_time, max_event_time and 
+      interval to avg-min-max-instant-stats.";
+    reference "0.6.0";
+  }
 
   revision "2017-08-16" {
     description
@@ -133,6 +142,27 @@ module openconfig-transport-types {
         "The maximum value of the statistic over the sampling
         period";
     }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
+    leaf interval {
+      type oc-types:stat-interval;
+      description
+        "The time interval over which the min/max/average statistics
+        are computed by the system.";
+    }
   }
 
   grouping avg-min-max-instant-stats-precision2-ps {
@@ -179,6 +209,27 @@ module openconfig-transport-types {
         "The maximum value of the statistic over the sampling
         period";
     }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
+    leaf interval {
+      type oc-types:stat-interval;
+      description
+        "The time interval over which the min/max/average statistics
+        are computed by the system.";
+    }
   }
 
   grouping avg-min-max-instant-stats-precision2-ps2 {
@@ -224,6 +275,27 @@ module openconfig-transport-types {
       description
         "The maximum value of the statistic over the sampling
         period";
+    }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
+    leaf interval {
+      type oc-types:stat-interval;
+      description
+        "The time interval over which the min/max/average statistics
+        are computed by the system.";
     }
   }
 
@@ -273,6 +345,27 @@ module openconfig-transport-types {
       description
         "The maximum value of the statistic over the sampling
         period";
+    }
+
+    leaf min_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of minimum value of the statistic over the sampling
+        period";
+    }
+    
+    leaf max_event_time {
+      type oc-yang:date-and-time;
+      description
+        "The Event time of maximum value of the statitic over the sampling
+        period";
+    }
+
+    leaf interval {
+      type oc-types:stat-interval;
+      description
+        "The time interval over which the min/max/average statistics
+        are computed by the system.";
     }
   }
 
