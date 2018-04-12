@@ -28,8 +28,7 @@ module openconfig-platform-port {
 
   revision "2018-03-20" {
     description
-      "Added port-type and port-to-interface reference 
-      to port state data";
+      "Added port-type to port state data";
     reference "0.4.0";
   }
 
@@ -148,18 +147,6 @@ module openconfig-platform-port {
           "osc port";
         }
       }
-    }
-
-    leaf ethernet-interface {
-      type oc-if:base-interface-ref;      
-      description
-        "Reference to the ethernet interface related to this port.";
-    }
-
-    leaf otn-interface {
-      type oc-if:base-interface-ref;      
-      description
-        "Reference to the OTN interface related to this port.";
     }
   } 
 
