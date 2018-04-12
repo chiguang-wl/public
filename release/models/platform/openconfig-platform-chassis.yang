@@ -38,6 +38,7 @@ module openconfig-platform-chassis {
       "Configuration data for the slot of Chassis";
 
     leaf slot-id {
+      config false;
       type string;
       description
       "Identifier for the slot or chassis position in which the
@@ -61,27 +62,6 @@ module openconfig-platform-chassis {
       description
         "Defined all the equipment types which can be installed 
         on the slot.";
-    }
-
-    leaf avail-state {
-      type enumeration {
-        enum "not-present"{
-          description
-            "There is not any card present in this slot";
-        }
-
-        enum "mismatch"{
-          description
-            "The card present in this slot cannot match
-            possible-card-types";
-        }
-
-        enum "match"{
-          description
-            "The card present in this slot can match
-            possible-card-types";
-        }
-      }
     }
   }
 
