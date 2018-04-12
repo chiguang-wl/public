@@ -67,8 +67,7 @@ module openconfig-platform {
   revision "2018-03-20" {
     description
       "Added new per-component config data: admin-status;
-      Added new per-component state data: mfg-time;
-      Added supercomponent for super-component reference.";
+      Added new per-component state data: mfg-time and if-pluggable.";
     reference "0.10.0";
   }
 
@@ -252,53 +251,6 @@ module openconfig-platform {
     }
   }
 
-   grouping platform-supercomponent-ref-config {
-    description
-      "Configuration data for supercomponent references";
-
-    leaf name {
-      type leafref {
-        path "../../../../component/config/name";
-      }
-      description
-        "Reference to the name of the supercomponent";
-    }
-  }
-
-  grouping platform-supercomponent-ref-state {
-    description
-      "Operational state data for supercomponent references";
-
-  }
-
-  grouping platform-supercomponent-ref-top {
-    description
-      "Top-level grouping for list of supercomponent references";
-
-    container supercomponent {
-      description
-        "Container for supercomponent references";
-
-      container config {
-        description
-          "Configuration data for the supercomponent";
-
-        uses platform-supercomponent-ref-config;
-      }
-
-      container state {
-
-        config false;
-
-        description
-          "Operational state data for the supercomponent";
-
-        uses platform-supercomponent-ref-config;
-        uses platform-supercomponent-ref-state;
-      }
-    }
-  }
-
   grouping platform-component-config {
     description
       "Configuration data for components";
@@ -421,6 +373,12 @@ module openconfig-platform {
       description
         "If applicable, this reports the current operational status
         of the component.";
+    }
+
+    leaf if-pluggable {
+      type boolean;
+      description
+        "If true, this component is pluggable, otherwise not.";
     }
   }
 
@@ -759,7 +717,6 @@ module openconfig-platform {
         }
 
         uses platform-component-properties-top;
-        uses platform-supercomponent-ref-top;
         uses platform-subcomponent-ref-top;
         uses platform-anchors-top;
       }
