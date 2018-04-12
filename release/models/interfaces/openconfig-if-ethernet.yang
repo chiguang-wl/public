@@ -194,64 +194,6 @@ module openconfig-if-ethernet {
       reference
         "IEEE 802.3x";
     }
-
-    leaf fec-type { 
-      type enumeration {
-        enum enabled {
-          value 1;
-          description
-            "FEC is enabled";
-        }
-
-        enum disabled {
-          value 2;
-          description
-            "FEC is disabled";
-        }
-
-        enum auto {
-          value 3;
-          description
-            "System will automatically decide FEC type of the ethernet interface.";
-        }
-      }
-
-      default auto;
-
-      description "FEC configuration";
-    }
-
-    leaf als-type
-    {
-      type enumeration {
-        enum none {
-          value 0;
-        }
-        enum laser-off {
-          value 1;
-          description
-            "Disable the transmitter consequent action.";
-        }
-        enum ethernet {
-          value 2;
-          description
-            "Ethernet Local Fault consequent action.";
-        }
-      }
-      default ethernet;
-      description
-        "Egress UNI port consequent action for network failure.";
-    }
-
-    leaf hold-off
-    {
-      type uint32;
-      units milliseconds;
-      default 0;
-      description
-        "Number of milliseconds to delay Egress UNI port consequent
-         action.";
-    }
   }
 
   grouping ethernet-interface-state-counters {
