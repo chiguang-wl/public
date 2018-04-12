@@ -39,7 +39,7 @@ module openconfig-platform-transceiver {
 
   revision "2018-03-20" {
     description
-      "Delete enabled, vendor-part and serial-no, 
+      "Delete vendor-part and serial-no, 
       which present in component common data";
     reference "0.5.0";
   }
@@ -238,6 +238,17 @@ module openconfig-platform-transceiver {
   grouping port-transceiver-config {
     description
       "Configuration data for client port transceivers";
+
+    leaf enabled {
+      type boolean;
+      description
+        "Turns power on / off to the transceiver -- provides a means
+        to power on/off the transceiver (in the case of SFP, SFP+,
+        QSFP,...) or enable high-power mode (in the case of CFP,
+        CFP2, CFP4) and is optionally supported (device can choose to
+        always enable).  True = power on / high power, False =
+        powered off";
+    }
 
     leaf form-factor-preconf {
       type identityref {
