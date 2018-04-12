@@ -23,7 +23,13 @@ module openconfig-platform-linecard {
     "This module defines data related to LINECARD components in
     the openconfig-platform model";
 
-  oc-ext:openconfig-version "0.1.0";
+  oc-ext:openconfig-version "0.2.0";
+
+  revision "2018-04-12" {
+    description
+      "Added linecard-type";
+    reference "0.2.0";
+  }
 
   revision "2017-08-03" {
     description
@@ -62,6 +68,12 @@ module openconfig-platform-linecard {
       description
         "Identifier for the slot or chassis position in which the
         linecard is installed";
+    }
+
+    leaf linecard-type {
+      type oc-platform-types:linecard-type;
+      description
+        "vendor specific linecard type";
     }
   }
 

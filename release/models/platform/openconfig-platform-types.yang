@@ -69,6 +69,13 @@ module openconfig-platform-types {
     }
   }
 
+  typedef linecard-type {
+    type enumeration {
+      enum linecard-vendor-type;
+      //vendor specific linecard type. to be confirmed
+    }
+  }
+
   // grouping statements
 
   grouping avg-min-max-instant-stats-precision1-celsius {
