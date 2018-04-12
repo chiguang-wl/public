@@ -361,13 +361,49 @@ module openconfig-transport-line-protection {
         corresponding to this automatic protection switch module
         in the device";
     }
-
+/*
     leaf revertive {
       type boolean;
       description
         "Revertive behavior of the module.
         If True, then automatically revert after protection switch
         once the fault is restored.";
+    }
+*/
+    leaf mode {
+      type enumeration {
+        enum auto-revertive {
+          description
+            "Auto-switchover with return, automatically swithover and
+             revert back once the fault is restored.";
+        }
+        enum auto-nonrevertive {
+          description
+            "Auto-switchover without return, automatically switchover
+             when fault happens on the current path.";
+        }
+        enum manual {
+          description
+            "Manually swithover considering path condition, if path 
+            that need to be switch has signal failure, the switchover 
+            will not work.";
+        } 
+        enum force {
+          description
+            "Manually swithover without considering path condition, 
+            if path that need to be switch has signal failure, the 
+            switchover will still work.";
+        }
+        enum relative {
+          description
+            "Auto-switchover based on reletive power difference between 
+            two paths, always work on the path with higher power if the 
+            power difference exeeds threshold.";
+        }
+      }
+
+      description
+        "protection mode";
     }
 
     leaf primary-switch-threshold {
@@ -428,6 +464,26 @@ module openconfig-transport-line-protection {
         then it is recommended to set both primary-switch-threshold
         and secondary-switch-threshold to the same value to be
         explicit";
+    }
+
+    leaf revertive-time {
+      type uint64;
+      units ms;
+      description
+        "The delay time of automatically revert after protection switch
+        once the fault is restored. it is only available when mode is 
+        auto-revertive";
+    }
+
+    leaf relative-switch-threshold {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units dB;
+      description
+        "The delta threshold in 0.01 dB at which the current line port 
+        will switch to opposite line port. it is only available when 
+        mode is relative";
     }
   }
 
