@@ -76,15 +76,21 @@ module openconfig-terminal-device {
     ports per linecard, separate linecards for client and line ports,
     etc.).";
 
-  oc-ext:openconfig-version "1.1.0";
+  oc-ext:openconfig-version "1.0.0";
 
   revision "2018-03-20" {
     description
-      "Adds OTN configuration and state data 
+      "Adds OTN configuration/state data 
       and augment it to OTN interface;
-      Delete OTN and ethernet data in logical channel;
-      Change ingress transceiver to ingress port.";
-    reference "1.1.0";
+      Change ingress transceiver to ingress port;
+      augment fec-mode to ethernet interface.
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "1.0.9";
   }
 
 
@@ -986,6 +992,20 @@ module openconfig-terminal-device {
           uses terminal-logical-channel-state;
         }
 
+        uses terminal-otn-protocol-top {
+          when "config/logical-channel-type = 'PROT_OTN'" {
+            description
+              "Include the OTN protocol data only when the
+              channel is using OTN framing.";
+          }
+        }
+        uses terminal-ethernet-protocol-top {
+          when "config/logical-channel-type = 'PROT_ETHERNET'" {
+            description
+              "Include the Ethernet protocol statistics only when the
+              protocol used by the link is Ethernet.";
+          }
+        }
         uses terminal-logical-channel-ingress-top;
         uses terminal-logical-chan-assignment-top;
       }
@@ -1268,7 +1288,7 @@ module openconfig-terminal-device {
 
   grouping ethernet-config-ext
   {
-    leaf fec-type { 
+    leaf fec-mode { 
       type enumeration {
         enum enabled {
           value 1;
@@ -1293,7 +1313,8 @@ module openconfig-terminal-device {
 
       description "FEC configuration";
     }
-
+//TODO
+/*
     leaf als-type
     {
       type enumeration {
@@ -1315,7 +1336,9 @@ module openconfig-terminal-device {
       description
         "Egress UNI port consequent action for network failure.";
     }
-
+*/
+//TODO
+/*
     leaf hold-off
     {
       type uint32;
@@ -1325,6 +1348,7 @@ module openconfig-terminal-device {
         "Number of milliseconds to delay Egress UNI port consequent
          action.";
     }
+*/
   }
 
   // data definition statements
