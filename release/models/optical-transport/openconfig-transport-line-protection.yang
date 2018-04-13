@@ -45,12 +45,18 @@ module openconfig-transport-line-protection {
   //                 |_______|
   //
 
-  oc-ext:openconfig-version "0.4.0";
+  oc-ext:openconfig-version "0.3.1";
 
   revision "2018-04-12" {
     description
-      "Added mode, revertive-time and relative-switch-threshold";
-    reference "0.4.0";
+      "Added mode, revert-delay and relative-switch-threshold.
+      
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.3.9";
   }
 
   revision "2017-09-08" {
@@ -378,12 +384,12 @@ module openconfig-transport-line-protection {
 */
     leaf mode {
       type enumeration {
-        enum auto-revertive {
+        enum revertive {
           description
             "Auto-switchover with return, automatically swithover and
              revert back once the fault is restored.";
         }
-        enum auto-nonrevertive {
+        enum nonrevertive {
           description
             "Auto-switchover without return, automatically switchover
              when fault happens on the current path.";
@@ -472,13 +478,12 @@ module openconfig-transport-line-protection {
         explicit";
     }
 
-    leaf revertive-time {
-      type uint64;
-      units ms;
+    leaf revert-delay {
+      type uint32;
+      units s;
       description
-        "The delay time of automatically revert after protection switch
-        once the fault is restored. it is only available when mode is 
-        auto-revertive";
+        "The delay time of automatically revert once the fault is restored. 
+        it is only available when mode is revertive";
     }
 
     leaf relative-switch-threshold {
