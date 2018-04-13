@@ -35,7 +35,7 @@ module openconfig-platform-transceiver {
     module defines a concrete schema for the associated data for
     components with type=TRANSCEIVER.";
 
-  oc-ext:openconfig-version "0.5.0";
+  oc-ext:openconfig-version "0.4.1";
 
   revision "2018-03-20" {
     description
@@ -48,7 +48,7 @@ module openconfig-platform-transceiver {
       If there is any question, please contact:
       Wang Lei, chiguang.wl@alibaba-inc.com;
       Chen Sai, chensai.cs@alibaba-inc.com.";
-    reference "0.5.0";
+    reference "0.4.9";
   }
 
   revision "2018-01-22" {
