@@ -23,15 +23,21 @@ module openconfig-platform-types {
     "This module defines data types (e.g., YANG identities)
     to support the OpenConfig component inventory model.";
 
-  oc-ext:openconfig-version "0.9.0";
+  oc-ext:openconfig-version "0.8.0";
 
   revision "2018-03-20" {
     description
       "Added min_event_time and max_event_time to 
       avg-min-max-instant-stats;
       Added avg-min-max-instant-stats-rpm;
-      Added card-type";
-    reference "0.9.0";
+      Added card-type and linecard-type;
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.8.9";
   }
   revision "2018-01-16" {
     description
