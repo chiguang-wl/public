@@ -24,15 +24,20 @@ module openconfig-if-ethernet {
     "Model for managing Ethernet interfaces -- augments the OpenConfig
     model for interface configuration and state.";
 
-  oc-ext:openconfig-version "2.4.0";
+  oc-ext:openconfig-version "2.3.0";
 
   revision "2018-03-20" {
     description
-      "Added ethernet fec and als configuration/state data;
-      Modefied the description of ethernet counters 
+      "Modefied the description of ethernet counters 
       according to IETF RFC2819;
-      Added new ethernet counters according to IETF RFC2819.";
-    reference "2.4.0";
+      Added new ethernet counters according to IETF RFC2819.
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "2.3.9";
   }
 
   revision "2018-01-05" {
