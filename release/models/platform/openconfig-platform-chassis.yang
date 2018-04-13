@@ -23,12 +23,17 @@ module openconfig-platform-chassis {
     "This module defines data related to CHASSIS components 
     in the openconfig-platform model.";
 
-  oc-ext:openconfig-version "0.1.0";
+  oc-ext:openconfig-version "0.0.9";
 
   revision "2018-03-20" {
     description
-      "Initial public release";
-    reference "0.1.0";
+      "Initial public release.
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.0.9";
   }
 
   // grouping statements
