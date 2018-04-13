@@ -29,12 +29,18 @@ module openconfig-transport-line-common {
     models for optical transport line system elements, such as
     amplifiers and ROADMs (wavelength routers).";
 
-  oc-ext:openconfig-version "0.4.0";
+  oc-ext:openconfig-version "0.3.1";
 
   revision "2018-04-12" {
     description
-      "added enabled and output-frequency to OSC";
-    reference "0.4.0";
+      "added enabled and output-frequency to OSC.
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.3.9";
   }
 
   revision "2017-09-08" {
