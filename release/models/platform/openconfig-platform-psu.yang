@@ -24,14 +24,20 @@ module openconfig-platform-psu {
     "This module defines a schema for power supply components in
     the OpenConfig platform model.";
 
-  oc-ext:openconfig-version "0.3.0";
+  oc-ext:openconfig-version "0.2.0";
 
    revision "2018-03-20" {
     description
       "Changed iput-current, input-voltage, output-power, 
-      output-current, output-voltage to gauge parameter;
-      Added slot-id.";
-    reference "0.3.0";
+      output-current, output-voltage to gauge parameters;
+      Added slot-id.
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.2.9";
   }
   revision "2018-01-16" {
     description
