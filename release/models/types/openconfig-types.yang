@@ -22,7 +22,7 @@ module openconfig-types {
     are used across OpenConfig models. It can be imported by modules
     that make use of these types.";
 
-  oc-ext:openconfig-version "0.5.0";
+  oc-ext:openconfig-version "0.4.0";
 
 
   revision "2018-03-20" {
@@ -30,8 +30,14 @@ module openconfig-types {
       "Add min_event_time and max_event_time to 
       min/max/avg stats;
       Add avg-min-max-instant-stats-precision2-mV;
-      Add avg-min-max-instant-stats-precision2-watts.";
-    reference "0.5.0";
+      Add avg-min-max-instant-stats-precision2-watts.
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.4.9";
   }
   revision "2018-01-16" {
     description
