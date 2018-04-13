@@ -24,13 +24,19 @@ module openconfig-lldp {
     "This module defines configuration and operational state data
     for the LLDP protocol.";
 
-  oc-ext:openconfig-version "0.2.0";
+  oc-ext:openconfig-version "0.1.0";
 
   revision "2018-04-10" {
     description
       "Added lldp-mode to lldp/interfaces/interface configuration 
-      and state data";
-    reference "0.2.0";
+      and state data.
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.1.9";
   }
 
   revision "2016-05-16" {
