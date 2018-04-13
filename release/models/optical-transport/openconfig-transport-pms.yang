@@ -20,7 +20,12 @@ module openconfig-transport-pms {
 
   description
     "This model describes configuration, operational state data and RPC 
-    for performance management of optical transport system.";
+    for performance management of optical transport system.
+    It is an informal version, which is only 
+    available for alibaba internal discussion.
+    If there is any question, please contact:
+    Wang Lei, chiguang.wl@alibaba-inc.com;
+    Chen Sai, chensai.cs@alibaba-inc.com.";
 
   oc-ext:openconfig-version "0.4.0";
 
