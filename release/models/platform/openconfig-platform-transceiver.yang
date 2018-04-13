@@ -40,7 +40,14 @@ module openconfig-platform-transceiver {
   revision "2018-03-20" {
     description
       "Delete vendor-part and serial-no, 
-      which present in component common data";
+      which present in component common data.
+
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
     reference "0.5.0";
   }
 
