@@ -24,12 +24,18 @@ module openconfig-platform-port {
   description
     "This module defines data related to PORT components in the openconfig-platform model";
 
-  oc-ext:openconfig-version "0.4.0";
+  oc-ext:openconfig-version "0.3.0";
 
   revision "2018-03-20" {
     description
-      "Added port-type to port state data";
-    reference "0.4.0";
+      "Added port-type to port state data.
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.3.9";
   }
 
   revision "2018-01-20" {
@@ -146,6 +152,8 @@ module openconfig-platform-port {
           description
           "osc port";
         }
+
+        //todo
       }
     }
   } 
