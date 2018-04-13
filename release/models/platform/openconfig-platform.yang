@@ -62,13 +62,20 @@ module openconfig-platform {
     (presence or absence of a component) and state (physical
     attributes or status).";
 
-  oc-ext:openconfig-version "0.10.0";
+  oc-ext:openconfig-version "0.9.0";
 
   revision "2018-03-20" {
     description
       "Added new per-component config data: admin-status;
-      Added new per-component state data: mfg-time and if-pluggable.";
-    reference "0.10.0";
+      Added new per-component state data: mfg-time and if-pluggable;
+      Added new container for control-card.
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.9.9";
   }
 
   revision "2018-01-30" {
@@ -670,6 +677,22 @@ module openconfig-platform {
         config false;
         description
           "Operational state data for backplane components";
+      }
+    }
+
+    container contro-card {
+      description
+        "Data for control-card components";
+
+      container config {
+        description
+          "Configuration data for control-card components";
+      }
+
+      container state {
+        config false;
+        description
+          "Operational state data for control-card components";
       }
     }
   }
