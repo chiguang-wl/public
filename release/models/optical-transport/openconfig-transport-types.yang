@@ -23,13 +23,19 @@ module openconfig-transport-types {
     "This module contains general type definitions and identities
     for optical transport models.";
 
-  oc-ext:openconfig-version "0.6.0";
+  oc-ext:openconfig-version "0.5.0";
 
   revision "2018-04-10" {
     description
       "Added min_event_time, max_event_time and 
-      interval to avg-min-max-instant-stats.";
-    reference "0.6.0";
+      interval to avg-min-max-instant-stats.
+
+      It is an informal version, which is only 
+      available for alibaba internal discussion.
+      If there is any question, please contact:
+      Wang Lei, chiguang.wl@alibaba-inc.com;
+      Chen Sai, chensai.cs@alibaba-inc.com.";
+    reference "0.5.9";
   }
 
   revision "2017-08-16" {
