@@ -43,7 +43,6 @@ module openconfig-platform-chassis {
       "Configuration data for the slot of Chassis";
 
     leaf slot-id {
-      config false;
       type string;
       description
       "Identifier for the slot or chassis position in which the
@@ -74,7 +73,7 @@ module openconfig-platform-chassis {
     description
       "Top-level grouping for slot data";
 
-   container slots {
+    container slots {
       list slot {
         key "slot-id";
 
